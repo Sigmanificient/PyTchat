@@ -1,79 +1,54 @@
 # python 3.8.6
-
+import random
 import socket
-import select
+import errno
+import string
+import sys
+import time
 
-print("Starting Server...")
+print("Starting Client...")
 
 HEADER_LENGTH = 16
 
-IP = "0.0.0.0"
-with open("listen_port") as f:
-    PORT = int(f.read())
+with open("server") as f:
+    IP, PORT = f.read().split(':')
+    PORT = int(PORT)
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-server_socket.bind((IP, PORT))
-server_socket.listen()
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect((IP, PORT))
+client_socket.setblocking(False)
 
-print("server listening on port", PORT)
+name = "foo".encode('utf-8')
+username_header = f"{len(name) : <{HEADER_LENGTH}}".encode("utf-8")
 
-socket_list = [server_socket]
-clients = {}
-
-
-def receive_message(client_socket):
-    try:
-        message_header = client_socket.recv(HEADER_LENGTH)
-        if not len(message_header):
-            return False
-
-        message_length = int(message_header.decode('utf-8').strip())
-        return {
-            "header": message_header, "data": client_socket.recv(message_length)
-        }
-
-    except Exception as e:
-        print(e)
-        return False
-
+client_socket.send(username_header + name)
 
 while True:
-    read_socket, _, exception_sockets = select.select(socket_list, [], socket_list)
+    message = input(">>> ").encode("utf-8")
+    message_header = f"{len(message) :< {HEADER_LENGTH}}".encode("utf-8")
+    client_socket.send(message_header + message)
 
-    for notified_socket in read_socket:
-        if notified_socket == server_socket:
-            client_socket, client_address = server_socket.accept()
+    try:
+        username_header = client_socket.recv(HEADER_LENGTH)
 
-            user = receive_message(client_socket)
+        if not len(username_header):
+            print("Connection closed by the server")
+            sys.exit()
 
-            if not user:
-                continue
+        username_length = int(username_header.decode("utf-8").strip())
+        username = client_socket.recv(username_length).decode("utf-8")
 
-            print(client_socket, user)
+        message_header = client_socket.recv(HEADER_LENGTH)
+        message_length = int(message_header.decode("utf-8").strip())
+        message = client_socket.recv(message_length).decode("utf-8")
 
-            socket_list.append(client_socket)
-            clients[client_socket] = user
+        print(username, message)
 
-            print(f"Accepted new connection from {client_address[0]}:{client_address[1]}")
+    except IOError as e:
+        if e.errno != errno.EAGAIN and e.errno != errno.EWOULDBLOCK:
+            print("reading error", str(e))
+            sys.exit()
 
-        else:
-            message = receive_message(notified_socket)
-
-            if not message:
-                print(f"Closed connection from {clients[notified_socket]['data'].decode('utf-8')}")
-                socket_list.remove(notified_socket)
-                clients.pop(notified_socket)
-                continue
-
-            user = clients[notified_socket]
-            print(f"receive_message from {user['data'].decode('utf-8')} - {len(message['data'].decode('utf-8')):,} chr")
-            # print(f"receive_message from {user['data'].decode('utf-8')}: {message['data'].decode('utf-8')}")
-
-            for client_socket in clients:
-                if client_socket != notified_socket:
-                    client_socket.send(user["header"] + user["data"] + message['header'] + message["data"])
-
-    for notified_socket in exception_sockets:
-        socket_list.remove(notified_socket)
-        clients.pop(notified_socket)
+    except Exception as e:
+        print("general error", str(e))
+        sys.exit()
