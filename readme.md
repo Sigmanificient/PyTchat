@@ -1,4 +1,4 @@
-# Python Tchat
+# Python Tchat [![CodeFactor](https://www.codefactor.io/repository/github/sigmanificient/pytchat/badge)](https://www.codefactor.io/repository/github/sigmanificient/pytchat)
 
 ### A simple texts communication platform using pygame and sockets.
 
