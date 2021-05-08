@@ -7,7 +7,7 @@ print("Starting Server...")
 
 HEADER_LENGTH = 16
 
-IP = "0.0.0.0"
+IP = '.'.join("0" * 4)
 with open("listen_port") as f:
     PORT = int(f.read())
 
