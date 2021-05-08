@@ -22,15 +22,15 @@ socket_list = [server_socket]
 clients = {}
 
 
-def receive_message(client_socket):
+def receive_message(_client_socket):
     try:
-        message_header = client_socket.recv(HEADER_LENGTH)
-        if not len(message_header):
+        message_header = _client_socket.recv(HEADER_LENGTH)
+        if not message_header:
             return False
 
         message_length = int(message_header.decode('utf-8').strip())
         return {
-            "header": message_header, "data": client_socket.recv(message_length)
+            "header": message_header, "data": _client_socket.recv(message_length)
         }
 
     except Exception as e:

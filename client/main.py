@@ -31,7 +31,7 @@ while True:
     try:
         username_header = client_socket.recv(HEADER_LENGTH)
 
-        if not len(username_header):
+        if not username_header:
             print("Connection closed by the server")
             sys.exit()
 
