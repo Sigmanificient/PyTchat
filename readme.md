@@ -5,6 +5,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/Sigmanificient/PyTchat)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Sigmanificient/PyTchat)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Sigmanificient/PyTchat)
+![Github](https://shields.io/github/license/Sigmanificient/PyTchat)
 
 ### A simple texts communication platform using pygame and sockets.
 
