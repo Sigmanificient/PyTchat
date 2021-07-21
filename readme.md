@@ -1,5 +1,6 @@
 # Python Tchat
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Sigmanificient/PyTchat/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/Sigmanificient/PyTchat/?branch=main)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Sigmanificient/PyTchat)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Sigmanificient/PyTchat)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Sigmanificient/PyTchat)
