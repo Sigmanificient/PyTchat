@@ -5,5 +5,5 @@
 venv
 
 # Server/port secrets.
-client/server
-server/listen_port
+*.env
+!*.env.example

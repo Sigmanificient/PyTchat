@@ -16,10 +16,9 @@
 
 ### Server
 - In your server, copy the `main.py` file from the `server` directory.
-- Create a `listen_port` file without any extensions and write which port you want to listen on.
-  ```bash
-  port
-  ```
+  
+- Create a `.env` file and write which port you want to listen on as
+  the `env.example` file.
     
 - run the server using :
   ```bash
@@ -28,16 +27,15 @@
 
 ### Client
 
-- On your local computer, open the `main.py` file from the `client` directory.
-- Create a file `server` with no extensions and write the address and port of your server like this:
-    ```bash
-    server:port
-    ```
+- On your local computer, open the `main.py` file from the `client` 
+  directory.
+  
+- Create a file `.env` and write the address and port of your server 
+  as the `.env.example` file.
 
 - Install the required python packages
   ```bash
   python -m pip install requirements.txt
   ```
-  You can find the package repository here : [pygame repo](https://github.com/pygame/pygame)
 
  - Run the client ( `main.py` )

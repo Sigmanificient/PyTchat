@@ -2,14 +2,22 @@
 
 import socket
 import select
+import dotenv
 
 print("Starting Server...")
 
 HEADER_LENGTH = 16
+config = dotenv.dotenv_values('.env')
 
-IP = '.'.join("0" * 4)
+IP = config.get('ip', '0.0.0.0')
+port = config.get('port')
+
+if not port:
+    print("No port were specified in the configuration.")
+    quit()
+
 with open("listen_port") as f:
-    PORT = int(f.read())
+    PORT = int(port)
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

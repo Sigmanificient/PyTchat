@@ -1,3 +1,4 @@
+import dotenv
 import errno
 import socket
 import sys
@@ -6,9 +7,18 @@ print("Starting Client...")
 
 HEADER_LENGTH = 16
 
-with open("server") as f:
-    IP, PORT = f.read().split(':')
-    PORT = int(PORT)
+config = dotenv.dotenv_values('.env')
+
+IP = config.get('ip')
+if not IP:
+    print("No server address were specified.")
+    quit()
+
+PORT = config.get('port')
+if not PORT:
+    print("No server port were specified.")
+    quit()
+
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((IP, PORT))
