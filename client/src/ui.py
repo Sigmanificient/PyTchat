@@ -11,11 +11,13 @@ class App:
         pygame.display.set_caption("PyChat v2.0")
 
         self.screen = pygame.display.set_mode((1280, 720))
+        icon = pygame.Surface((64, 64), pygame.SRCALPHA)
+        pygame.display.set_icon(icon)
 
         self.update_event = pygame.USEREVENT + 1
         pygame.time.set_timer(self.update_event, 1000)
 
-        self.font = pygame.font.Font("oxygen.ttf", 12)
+        self.font = pygame.font.Font("assets/oxygen.ttf", 12)
 
         self.message = ''
         self.history = []

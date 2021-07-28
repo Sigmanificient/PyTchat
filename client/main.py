@@ -22,7 +22,7 @@ def main():
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    client_socket.connect((ip, port))
+    client_socket.connect((ip, int(port)))
     client_socket.setblocking(False)
 
     app = App(Client(client_socket))
