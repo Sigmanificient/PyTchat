@@ -16,8 +16,7 @@ if not port:
     print("No port were specified in the configuration.")
     quit()
 
-with open("listen_port") as f:
-    PORT = int(port)
+PORT = int(port)
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
