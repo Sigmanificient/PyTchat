@@ -26,6 +26,7 @@ def main():
     client_socket.setblocking(False)
 
     app = App(Client(client_socket))
+    app.run()
 
 
 if __name__ == '__main__':

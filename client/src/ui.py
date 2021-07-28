@@ -22,7 +22,7 @@ class App:
 
         self.is_running = True
 
-    def __call__(self):
+    def run(self):
         pygame.event.set_blocked(None)
         pygame.event.set_allowed(
             (self.update, pygame.KEYDOWN, pygame.TEXTINPUT, pygame.QUIT)
