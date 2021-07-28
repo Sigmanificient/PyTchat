@@ -1,3 +1,9 @@
+# PyCharm Configuration Files
+.idea
+
+# Python
+venv
+
+# Server/port secrets.
 client/server
 server/listen_port
-.idea
