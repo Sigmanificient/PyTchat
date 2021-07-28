@@ -6,7 +6,7 @@ import dotenv
 
 print("Starting Server...")
 
-HEADER_LENGTH = 16
+HEADER_LENGTH = 10
 config = dotenv.dotenv_values('.env')
 
 IP = config.get('ip', '0.0.0.0')
@@ -20,25 +20,25 @@ PORT = int(port)
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 server_socket.bind((IP, PORT))
 server_socket.listen()
 
-print("server listening on port", PORT)
-
+print("server started")
 socket_list = [server_socket]
 clients = {}
 
 
-def receive_message(_client_socket):
+def receive_message(client_socket_):
     try:
-        message_header = _client_socket.recv(HEADER_LENGTH)
-        if not message_header:
+        message_header = client_socket_.recv(HEADER_LENGTH)
+        if not len(message_header):
             return False
 
         message_length = int(message_header.decode('utf-8').strip())
         return {
             "header": message_header,
-            "data": _client_socket.recv(message_length)
+            "data": client_socket_.recv(message_length)
         }
 
     except Exception as e:
@@ -47,11 +47,11 @@ def receive_message(_client_socket):
 
 
 while True:
-    read_socket, _, exception_sockets = select.select(
+    read_sockets, _, exception_sockets = select.select(
         socket_list, [], socket_list
     )
 
-    for notified_socket in read_socket:
+    for notified_socket in read_sockets:
         if notified_socket == server_socket:
             client_socket, client_address = server_socket.accept()
 
@@ -60,14 +60,12 @@ while True:
             if not user:
                 continue
 
-            print(client_socket, user)
-
             socket_list.append(client_socket)
             clients[client_socket] = user
 
             print(
-                f"Accepted new connection from {client_address[0]}:",
-                client_address[1]
+                f"Accepted new connection from {client_address[0]}:" 
+                f"{client_address[1]} username: {user['data'].decode('utf-8')}"
             )
 
         else:
@@ -75,18 +73,18 @@ while True:
 
             if not message:
                 print(
-                    f"Closed connection from",
+                    "Closed connection from",
                     clients[notified_socket]['data'].decode('utf-8')
                 )
 
                 socket_list.remove(notified_socket)
-                clients.pop(notified_socket)
+                del clients[notified_socket]
                 continue
 
             user = clients[notified_socket]
             print(
-                f"receive_message from {user['data'].decode('utf-8')}",
-                f" - {len(message['data'].decode('utf-8')):,} chr"
+                f"receive_message from {user['data'].decode('utf-8')}:",
+                message['data'].decode('utf-8')
             )
 
             for client_socket in clients:
@@ -100,4 +98,4 @@ while True:
 
     for notified_socket in exception_sockets:
         socket_list.remove(notified_socket)
-        clients.pop(notified_socket)
+        del clients[notified_socket]
