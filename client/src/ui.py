@@ -65,6 +65,9 @@ class App:
         self.history.extend(new_messages)
 
     def send_message(self):
+        if not len(self.message):
+            return
+
         self.client.send_message = self.message
         self.client.send()
 
@@ -93,5 +96,5 @@ class App:
         if event.key == pygame.K_BACKSPACE:
             self.message = self.message[:-1]
 
-        if event.key == pygame.K_RETURN and len(self.message):
+        if event.key == pygame.K_RETURN:
             self.send_message()
