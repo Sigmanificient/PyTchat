@@ -12,8 +12,8 @@ class App:
 
         self.screen = pygame.display.set_mode((1280, 720))
 
-        self.update = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.update, 1000)
+        self.update_event = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.update_event, 1000)
 
         self.font = pygame.font.Font("oxygen.ttf", 12)
 
@@ -25,7 +25,7 @@ class App:
     def run(self):
         pygame.event.set_blocked(None)
         pygame.event.set_allowed(
-            (self.update, pygame.KEYDOWN, pygame.TEXTINPUT, pygame.QUIT)
+            (self.update_event, pygame.KEYDOWN, pygame.TEXTINPUT, pygame.QUIT)
         )
 
         while self.is_running:
@@ -54,30 +54,35 @@ class App:
 
         pygame.display.update()
 
+    def update(self):
+        new_messages = self.client.fetch_new_messages()
+
+        if not len(new_messages):
+            return
+
+        self.history.extend(new_messages)
+
     def handle_event(self, event):
         if event.type == pygame.QUIT:
             self.is_running = False
             return
 
-        if event.type == self.update:
-            new_messages = self.client.fetch_new_messages()
-
-            if len(new_messages):
-                for new_message in new_messages:
-                    self.history.append(new_message)
-
+        if event.type == self.update_event:
+            self.update()
             return
 
         if event.type == pygame.TEXTINPUT:
             self.message += event.text
             return
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE:
-                self.message = self.message[:-1]
+        if event.type != pygame.KEYDOWN:
+            return
 
-            if event.key == pygame.K_RETURN and len(self.message):
-                self.client.send_message = self.message
+        if event.key == pygame.K_BACKSPACE:
+            self.message = self.message[:-1]
 
-                self.history.append({"author": "you", "content": self.message})
-                self.message = ''
+        if event.key == pygame.K_RETURN and len(self.message):
+            self.client.send_message = self.message
+
+            self.history.append({"author": "you", "content": self.message})
+            self.message = ''
