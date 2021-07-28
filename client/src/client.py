@@ -38,9 +38,6 @@ class Client:
         new_messages.append({'author': username, 'content': message})
 
     def fetch_new_messages(self):
-        if len(self.send_message):
-            self.send()
-
         new_messages = []
 
         try:

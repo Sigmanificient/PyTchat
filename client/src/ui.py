@@ -62,6 +62,13 @@ class App:
 
         self.history.extend(new_messages)
 
+    def send_message(self):
+        self.client.send_message = self.message
+        self.client.send()
+
+        self.history.append({"author": "you", "content": self.message})
+        self.message = ''
+
     def handle_event(self, event):
         if event.type == pygame.QUIT:
             self.is_running = False
@@ -71,6 +78,9 @@ class App:
             self.update()
             return
 
+        self.handle_typing(event)
+
+    def handle_typing(self, event):
         if event.type == pygame.TEXTINPUT:
             self.message += event.text
             return
@@ -82,7 +92,4 @@ class App:
             self.message = self.message[:-1]
 
         if event.key == pygame.K_RETURN and len(self.message):
-            self.client.send_message = self.message
-
-            self.history.append({"author": "you", "content": self.message})
-            self.message = ''
+            self.send_message()
