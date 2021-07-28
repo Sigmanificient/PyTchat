@@ -30,7 +30,8 @@ def receive_message(_client_socket):
 
         message_length = int(message_header.decode('utf-8').strip())
         return {
-            "header": message_header, "data": _client_socket.recv(message_length)
+            "header": message_header,
+            "data": _client_socket.recv(message_length)
         }
 
     except Exception as e:
@@ -39,7 +40,9 @@ def receive_message(_client_socket):
 
 
 while True:
-    read_socket, _, exception_sockets = select.select(socket_list, [], socket_list)
+    read_socket, _, exception_sockets = select.select(
+        socket_list, [], socket_list
+    )
 
     for notified_socket in read_socket:
         if notified_socket == server_socket:
@@ -55,24 +58,38 @@ while True:
             socket_list.append(client_socket)
             clients[client_socket] = user
 
-            print(f"Accepted new connection from {client_address[0]}:{client_address[1]}")
+            print(
+                f"Accepted new connection from {client_address[0]}:",
+                client_address[1]
+            )
 
         else:
             message = receive_message(notified_socket)
 
             if not message:
-                print(f"Closed connection from {clients[notified_socket]['data'].decode('utf-8')}")
+                print(
+                    f"Closed connection from",
+                    clients[notified_socket]['data'].decode('utf-8')
+                )
+
                 socket_list.remove(notified_socket)
                 clients.pop(notified_socket)
                 continue
 
             user = clients[notified_socket]
-            print(f"receive_message from {user['data'].decode('utf-8')} - {len(message['data'].decode('utf-8')):,} chr")
-            # print(f"receive_message from {user['data'].decode('utf-8')}: {message['data'].decode('utf-8')}")
+            print(
+                f"receive_message from {user['data'].decode('utf-8')}",
+                f" - {len(message['data'].decode('utf-8')):,} chr"
+            )
 
             for client_socket in clients:
                 if client_socket != notified_socket:
-                    client_socket.send(user["header"] + user["data"] + message['header'] + message["data"])
+                    client_socket.send(
+                        (
+                            user["header"] + user["data"]
+                            + message['header'] + message["data"]
+                        )
+                    )
 
     for notified_socket in exception_sockets:
         socket_list.remove(notified_socket)

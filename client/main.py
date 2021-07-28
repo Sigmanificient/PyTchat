@@ -1,10 +1,6 @@
-# python 3.8.6
-import random
-import socket
 import errno
-import string
+import socket
 import sys
-import time
 
 print("Starting Client...")
 
@@ -45,7 +41,7 @@ while True:
         print(username, message)
 
     except IOError as e:
-        if e.errno != errno.EAGAIN and e.errno != errno.EWOULDBLOCK:
+        if e.errno not in [errno.EAGAIN, errno.EWOULDBLOCK]:
             print("reading error", str(e))
             sys.exit()
 
