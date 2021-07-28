@@ -15,3 +15,7 @@ def main():
         quit()
 
     start(ip, int(port))
+
+
+if __name__ == '__main__':
+    main()
