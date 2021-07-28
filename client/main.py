@@ -1,8 +1,8 @@
 import dotenv
 import socket
 
-from client.src.client import Client
-from client.src.ui import App
+from src.client import Client
+from src.ui import App
 
 
 def main():
