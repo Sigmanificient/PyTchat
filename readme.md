@@ -19,8 +19,14 @@
   
 - Create a `.env` file and write which port you want to listen on as
   the `env.example` file.
-    
-- run the server using :
+
+- Install the required python packages
+  ```bash
+  python -m pip install requirements.txt
+  ```  
+
+- run the server using the `bat` file, the `sh` file or this command
+  below:
   ```bash
   python -m python -m main.py
   ```
