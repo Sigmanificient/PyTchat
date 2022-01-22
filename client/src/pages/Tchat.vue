@@ -7,22 +7,22 @@
 	</header>
 	<div id="tchat" class="container">
 		<div class="tchat">
-			<div class="welcome">
-				<p>
-					Welcome to the chat room, {{ username }}!
-				</p>
-			</div>
 			<div
 				class="message-container"
 				v-for="message in messages"
 				:key="message"
-				:class="message['user'] === username ? 'message-self' : 'message-other'"
+				:class="getMessageClass(message['user'])"
 			>
-				<div class="message">
+				<div v-if="message['user'] !== 'system'" class="message">
 					<p class="author">
 						{{ message['user'] }}
 					</p>
 					<p class="content">
+						{{ message['message'] }}
+					</p>
+				</div>
+				<div v-else class="system">
+					<p>
 						{{ message['message'] }}
 					</p>
 				</div>
@@ -86,6 +86,17 @@ export default {
 				}
 			};
 		},
+		getMessageClass(user) {
+			if (user === this.username) {
+				return "message-self";
+			}
+			else if (user === "system") {
+				return "message-system";
+			}
+			else {
+				return "message-other";
+			}
+		},
 		sendMessage() {
 			if (this.message) {
 				this.ws.send(
@@ -114,7 +125,12 @@ export default {
 			this.users = users;
 		},
 		loggedIn(username) {
-			console.log(username);
+			this.messages.push(
+				{
+					user: "system",
+					message: `${username} has joined the chat.`,
+				}
+			);
 		},
 		loggedOut(username) {
 			console.log(username);
@@ -150,7 +166,7 @@ export default {
 	font-weight: normal;
 }
 
-.welcome {
+.system {
 	margin-top: 10px;
 	padding-inline: 10px;
 }
