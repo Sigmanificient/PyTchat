@@ -12,6 +12,10 @@ def on_client(client, _srv):
     )
 
 
+def on_client_left(client, _srv):
+    print('-> Client left:', client['address'])
+
+
 def on_message_received(_client, server, message):
     print('-> Received message from', _client['address'], ':', message)
     server.send_message_to_all(message)
@@ -37,6 +41,7 @@ def main():
 
     server.set_fn_new_client(on_client)
     server.set_fn_message_received(on_message_received)
+    server.set_fn_client_left(on_client_left)
     server.run_forever()
 
 
