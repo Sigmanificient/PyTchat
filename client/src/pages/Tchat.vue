@@ -79,7 +79,7 @@ export default {
 						break;
 					case "logout":
 						console.log("logout");
-						this.loggedOut("logout", data["username"]);
+						this.loggedOut(data["username"]);
 						break;
 					case "users":
 						this.setUsers(data["users"]);
