@@ -15,8 +15,17 @@ def on_client(client, _srv):
     )
 
 
-def on_client_left(client, _srv):
+def on_client_left(client, server):
     print('-> Client left:', client['address'])
+    username = users.pop(client['address'])
+    server.send_message_to_all(
+        msg=json.dumps(
+            {
+                'type': 'logout',
+                'username': username
+            }
+        )
+    )
 
 
 def on_message_received(_client, server, data):
@@ -53,17 +62,6 @@ def on_message_received(_client, server, data):
                     'type': 'message',
                     'username': users[_client['address']],
                     'message': data['content']
-                }
-            )
-        )
-
-    elif data['type'] == 'logout':
-        username = users.pop(_client['address'])
-        server.send_message_to_all(
-            msg=json.dumps(
-                {
-                    'type': 'logout',
-                    'username': username
                 }
             )
         )
