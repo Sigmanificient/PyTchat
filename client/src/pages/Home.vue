@@ -18,7 +18,7 @@
 			</div>
 
 			<div class="form-group">
-				<input type="submit">
+				<input @click="login()" type="submit">
 			</div>
 		</div>
 	</main>
@@ -34,6 +34,18 @@ export default {
 			username: ""
 		};
 	},
+	methods: {
+		login() {
+			this.$router.push({
+				name: "tchat",
+				params: {
+					address: this.address,
+					port: this.port,
+					username: this.username
+				}
+			});
+		}
+	}
 }
 </script>
 <style scoped>
