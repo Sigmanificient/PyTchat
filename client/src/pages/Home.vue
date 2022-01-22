@@ -8,7 +8,7 @@
 				</div>
 				<div class="form-group">
 					<label>Server Port</label>
-					<input type="number" min="0" max="65535" v-model.number="port" placeholder="4269">
+					<input type="number" v-model.number="port" placeholder="4269">
 				</div>
 			</div>
 
@@ -30,7 +30,7 @@ export default {
 	data() {
 		return {
 			address: "",
-			port: 0,
+			port: null,
 			username: ""
 		};
 	},
@@ -53,8 +53,6 @@ export default {
 	display: grid;
 	place-items: center;
 	height: 100vh;
-
-	background-color: #0a0c10;
 }
 
 .server-info {
@@ -65,9 +63,8 @@ export default {
 .login_fom {
 	display: grid;
 	grid-gap: 2em;
-	background-color: #0d141c;
+	background-color: #131926;
 	padding: 2em;
-
 }
 
 .form-group {
@@ -85,7 +82,6 @@ export default {
 	border-bottom: 1px solid #1e3348;
 	background-color: transparent;
 	color: inherit;
-	font-size: 1em;
 	padding: 0.5em;
 }
 
@@ -99,11 +95,12 @@ export default {
 	border: none;
 	background-color: #1e3348;
 	font-size: 1em;
-	padding: 0.5em;
+	padding: 0.5em 2em;
 	cursor: pointer;
+	width: fit-content;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 540px) {
 	.server-info {
 		flex-direction: column;
 	}
