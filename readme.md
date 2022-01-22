@@ -33,15 +33,17 @@
 
 ### Client
 
-- On your local computer, open the `main.py` file from the `client` 
-  directory.
-  
-- Create a file `.env` and write the address and port of your server 
-  as the `.env.example` file.
+- Make sure to have `node.js` installed on your computer.
+- Download the source code from this repo.
 
-- Install the required python packages
-  ```bash
-  python -m pip install requirements.txt
+- Install the required dependencies
+  ```sh
+  npm install
   ```
 
- - Run the client ( `main.py` )
+- Run the client using
+  ```sh
+  npm run seve
+  ```
+
+- Run the client ( `main.py` )
