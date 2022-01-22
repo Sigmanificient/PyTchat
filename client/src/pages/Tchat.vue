@@ -5,14 +5,16 @@
 			<p>Connected as {{ username }}</p>
 		</div>
 	</header>
-	<main class="main">
+	<div id="tchat" class="container">
 		<div class="tchat">
-
+			<div class="message" v-for="message in messages" :key="message">
+				{{ message }}
+			</div>
 		</div>
-		<div class="input">
-			<input type="text" v-model="message" @keyup.enter="sendMessage">
-		</div>
-	</main>
+	</div>
+	<div class="input">
+		<input type="text" v-model="message" @keyup.enter="sendMessage">
+	</div>
 </template>
 
 <script>
@@ -25,6 +27,9 @@ export default {
 			username: this.$route.params.username,
 			ws: null,
 			message: "",
+			messages: [],
+			users: [],
+			tchat: null,
 		}
 	},
 	mounted() {
@@ -34,6 +39,8 @@ export default {
 	},
 	methods: {
 		connect() {
+			this.tchat = document.getElementById("tchat");
+
 			this.ws = new WebSocket(`ws://${this.address}:${this.port}`);
 			this.ws.onopen = () => {
 				this.ws.send(
@@ -48,13 +55,16 @@ export default {
 				let data = JSON.parse(event.data);
 				switch (data.type) {
 					case "message":
-						this.gotMessage(data["content"]);
+						this.gotMessage(data["usernames"], data["message"]);
 						break;
 					case "login":
 						this.loggedIn(data["username"]);
 						break;
 					case "logout":
 						this.loggedOut("logout", data["username"]);
+						break;
+					case "users":
+						this.setUsers(data["users"]);
 						break;
 				}
 			};
@@ -71,8 +81,18 @@ export default {
 				this.message = "";
 			}
 		},
-		gotMessage(message) {
-			console.log(message);
+		gotMessage(user, message) {
+			this.messages.push(
+				{
+					user: user,
+					message: message,
+				}
+			);
+
+			this.tchat.scrollTop = this.tchat.scrollHeight;
+		},
+		setUsers(users) {
+			this.users = users;
 		},
 		loggedIn(username) {
 			console.log(username);
@@ -89,7 +109,7 @@ export default {
 	background-color: #131926;
 	border-bottom: 2px solid #1b253a;
 	max-height: 64px;
-	position: fixed;
+
 	width: 100%;
 	top: 0;
 }
@@ -107,17 +127,30 @@ export default {
 	font-weight: normal;
 }
 
-.main {
-	display: grid;
-	flex-direction: row;
-	align-items: flex-end;
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: calc(100vh - 128px);
+	width: 100%;
+	overflow-y: scroll;
+}
 
-	margin: auto;
+.tchat {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin: auto auto;
 	width: min(80%, 1440px);
 	height: 100vh;
 }
 
 .input {
+	background-color: #131926;
+	border-top: 2px solid #1b253a;
+	position: fixed;
+	bottom: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
