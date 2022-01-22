@@ -8,6 +8,8 @@ export default {
 </script>
 <style>
 body {
+	color: #8dbeba;
+	font-family: 'Poppins', sans-serif;
 	margin: 0;
 }
 </style>
