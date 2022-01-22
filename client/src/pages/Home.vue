@@ -47,7 +47,7 @@ export default {
 
 .server-info {
 	display: flex;
-	gap: 1em;
+	gap: 2em;
 }
 
 .login_fom {
@@ -89,5 +89,11 @@ export default {
 	font-size: 1em;
 	padding: 0.5em;
 	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	.server-info {
+		flex-direction: column;
+	}
 }
 </style>
