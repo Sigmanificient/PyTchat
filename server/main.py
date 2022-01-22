@@ -27,7 +27,7 @@ def on_message_received(_client, server, data):
     if data['type'] == 'login':
         users[_client['address']] = data['username']
         server.send_message_to_all(
-            _client, json.dumps(
+            msg=json.dumps(
                 {
                     'type': 'login',
                     'username': data['username']
@@ -36,7 +36,8 @@ def on_message_received(_client, server, data):
         )
 
         server.send_message(
-            _client, json.dumps(
+            client=_client,
+            msg=json.dumps(
                 {
                     'type': 'users',
                     'users': list(users.values())
@@ -45,12 +46,13 @@ def on_message_received(_client, server, data):
         )
 
     elif data['type'] == 'message':
+        print(users[_client['address']])
         server.send_message_to_all(
-            json.dumps(
+            msg=json.dumps(
                 {
                     'type': 'message',
                     'username': users[_client['address']],
-                    'message': data['message']
+                    'message': data['content']
                 }
             )
         )
@@ -58,7 +60,7 @@ def on_message_received(_client, server, data):
     elif data['type'] == 'logout':
         username = users.pop(_client['address'])
         server.send_message_to_all(
-            _client, json.dumps(
+            msg=json.dumps(
                 {
                     'type': 'logout',
                     'username': username
