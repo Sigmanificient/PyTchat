@@ -1,7 +1,10 @@
+import json
 import logging
 
 import dotenv
 from websocket_server import WebsocketServer
+
+users = {}
 
 
 def on_client(client, _srv):
@@ -16,9 +19,52 @@ def on_client_left(client, _srv):
     print('-> Client left:', client['address'])
 
 
-def on_message_received(_client, server, message):
-    print('-> Received message from', _client['address'], ':', message)
-    server.send_message_to_all(message)
+def on_message_received(_client, server, data):
+    print('-> Received message from', _client['address'], ':', data)
+
+    data = json.JSONDecoder().decode(data)
+
+    if data['type'] == 'login':
+        users[_client['address']] = data['username']
+        server.send_message_to_all(
+            _client, json.dumps(
+                {
+                    'type': 'login',
+                    'username': data['username']
+                }
+            )
+        )
+
+        server.send_message(
+            _client, json.dumps(
+                {
+                    'type': 'users',
+                    'users': list(users.values())
+                }
+            )
+        )
+
+    elif data['type'] == 'message':
+        server.send_message_to_all(
+            json.dumps(
+                {
+                    'type': 'message',
+                    'username': users[_client['address']],
+                    'message': data['message']
+                }
+            )
+        )
+
+    elif data['type'] == 'logout':
+        username = users.pop(_client['address'])
+        server.send_message_to_all(
+            _client, json.dumps(
+                {
+                    'type': 'logout',
+                    'username': username
+                }
+            )
+        )
 
 
 def main():
