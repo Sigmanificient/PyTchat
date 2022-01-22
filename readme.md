@@ -6,6 +6,8 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/Sigmanificient/PyTchat)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Sigmanificient/PyTchat)
 ![Github](https://shields.io/github/license/Sigmanificient/PyTchat)
+![gitmoji](https://img.shields.io/badge/gitmoji-%20🚀%20💀-FFDD67.svg)
+![Lines of code](https://tokei.rs/b1/github/Sigmanificient/PyTchat?category=code)
 
 ### A simple texts communication platform using pygame and sockets.
 
