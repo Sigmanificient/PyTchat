@@ -8,7 +8,7 @@ end_of_line = lf
 indent_size = 2
 tab_width = 2
 max_line_length = 120
-ij_continuation_indent_size = 8
+ij_continuation_indent_size = 2
 ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = false
@@ -22,8 +22,6 @@ tab_width = 4
 indent_size = 4
 
 [*.css]
-indent_size = 4
-tab_width = 4
 ij_smart_tabs = false
 ij_css_align_closing_brace_with_properties = false
 ij_css_blank_lines_around_nested_selector = 1
@@ -45,7 +43,6 @@ ij_css_use_double_quotes = true
 ij_css_value_alignment = do_not_align
 
 [*.scss]
-tab_width = 4
 ij_smart_tabs = false
 ij_scss_align_closing_brace_with_properties = false
 ij_scss_blank_lines_around_nested_selector = 1
@@ -70,7 +67,6 @@ ij_scss_value_alignment = 0
 
 [*.vue]
 indent_style = tab
-ij_continuation_indent_size = 4
 ij_visual_guides = 80, 120
 ij_vue_indent_children_of_top_level = template
 ij_vue_interpolation_new_line_after_start_delimiter = true
@@ -80,9 +76,6 @@ ij_vue_keep_indents_on_empty_lines = false
 ij_vue_spaces_within_interpolation_expressions = true
 
 [{*.cjs,*.js}]
-indent_size = 4
-tab_width = 4
-ij_continuation_indent_size = 4
 ij_smart_tabs = false
 ij_javascript_align_imports = false
 ij_javascript_align_multiline_array_initializer_expression = false
@@ -250,7 +243,6 @@ ij_javascript_while_on_new_line = false
 ij_javascript_wrap_comments = false
 
 [{*.htm,*.html,*.ng,*.sht,*.shtm,*.shtml}]
-ij_continuation_indent_size = 2
 ij_smart_tabs = false
 ij_visual_guides = 80, 120
 ij_html_add_new_line_before_tags = body, div, p, form, h1, h2, h3
