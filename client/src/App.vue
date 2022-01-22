@@ -7,6 +7,10 @@ export default {
 };
 </script>
 <style>
+:root {
+	scroll-behavior: smooth;
+}
+
 body {
 	color: #8dbeba;
 	background-color: #0e1018;

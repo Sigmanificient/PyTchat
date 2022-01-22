@@ -7,8 +7,25 @@
 	</header>
 	<div id="tchat" class="container">
 		<div class="tchat">
-			<div class="message" v-for="message in messages" :key="message">
-				{{ message }}
+			<div class="welcome">
+				<p>
+					Welcome to the chat room, {{ username }}!
+				</p>
+			</div>
+			<div
+				class="message-container"
+				v-for="message in messages"
+				:key="message"
+				:class="message['user'] === username ? 'message-self' : 'message-other'"
+			>
+				<div class="message">
+					<p class="author">
+						{{ message['user'] }}
+					</p>
+					<p class="content">
+						{{ message['message'] }}
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -55,7 +72,7 @@ export default {
 				let data = JSON.parse(event.data);
 				switch (data.type) {
 					case "message":
-						this.gotMessage(data["usernames"], data["message"]);
+						this.gotMessage(data["username"], data["message"]);
 						break;
 					case "login":
 						this.loggedIn(data["username"]);
@@ -89,7 +106,9 @@ export default {
 				}
 			);
 
-			this.tchat.scrollTop = this.tchat.scrollHeight;
+			setTimeout(() => {
+				this.tchat.scrollTop = this.tchat.scrollHeight;
+			}, 1);
 		},
 		setUsers(users) {
 			this.users = users;
@@ -122,9 +141,18 @@ export default {
 	margin: 0 auto;
 }
 
+.message-self {
+	justify-content: flex-end;
+}
+
 .header-container h1 {
 	font-size: 1.2em;
 	font-weight: normal;
+}
+
+.welcome {
+	margin-top: 10px;
+	padding-inline: 10px;
 }
 
 .container {
@@ -135,15 +163,39 @@ export default {
 	height: calc(100vh - 128px);
 	width: 100%;
 	overflow-y: scroll;
+	margin-bottom: 64px;
 }
 
 .tchat {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
+	align-items: flex-start;
+	justify-content: flex-start;
 	margin: auto auto;
 	width: min(80%, 1440px);
 	height: 100vh;
+	gap: 10px;
+}
+
+.message-container {
+	width: 100%;
+	display: flex;
+}
+
+.message {
+	background-color: #131926;
+	border-top: 2px solid #1b253a;
+	padding-inline: 10px;
+}
+
+.author {
+	font-size: 0.6em;
+}
+
+.content {
+	font-size: 0.8em;
+	max-width: 100%;
+	word-wrap: break-word;
 }
 
 .input {
@@ -155,7 +207,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: 64px;
+	height: 56px;
 }
 
 .input input {
