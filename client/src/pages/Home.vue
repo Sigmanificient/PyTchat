@@ -4,21 +4,21 @@
 			<div class="server-info">
 				<div class="form-group">
 					<label>Server IP Address</label>
-					<input v-model="address" placeholder="127.0.0.1">
+					<input v-model="address" placeholder="127.0.0.1" />
 				</div>
 				<div class="form-group">
 					<label>Server Port</label>
-					<input type="number" v-model.number="port" placeholder="4269">
+					<input type="number" v-model.number="port" placeholder="4269" />
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label>Username</label>
-				<input v-model="username" placeholder="Boop">
+				<input v-model="username" placeholder="Boop" />
 			</div>
 
 			<div class="form-group">
-				<input @click="login()" type="submit">
+				<input @click="login()" type="submit" />
 			</div>
 		</div>
 	</main>
@@ -31,7 +31,7 @@ export default {
 		return {
 			address: "",
 			port: null,
-			username: ""
+			username: "",
 		};
 	},
 	methods: {
@@ -41,12 +41,12 @@ export default {
 				params: {
 					address: this.address,
 					port: this.port,
-					username: this.username
-				}
+					username: this.username,
+				},
 			});
-		}
-	}
-}
+		},
+	},
+};
 </script>
 <style scoped>
 .from_wrapper {
@@ -85,13 +85,13 @@ export default {
 	padding: 0.5em;
 }
 
-.form-group input[type=number] {
+.form-group input[type="number"] {
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
 	margin: 0;
 }
 
-.form-group input[type=submit] {
+.form-group input[type="submit"] {
 	border: none;
 	background-color: #1e3348;
 	font-size: 1em;

@@ -15,22 +15,22 @@
 			>
 				<div v-if="message['user'] !== 'system'" class="message">
 					<p class="author">
-						{{ message['user'] }}
+						{{ message["user"] }}
 					</p>
 					<p class="content">
-						{{ message['message'] }}
+						{{ message["message"] }}
 					</p>
 				</div>
 				<div v-else class="system">
 					<p>
-						{{ message['message'] }}
+						{{ message["message"] }}
 					</p>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="input">
-		<input type="text" v-model="message" @keyup.enter="sendMessage">
+		<input type="text" v-model="message" @keyup.enter="sendMessage" />
 	</div>
 </template>
 
@@ -47,7 +47,7 @@ export default {
 			messages: [],
 			users: [],
 			tchat: null,
-		}
+		};
 	},
 	mounted() {
 		if (this.address && this.port) {
@@ -95,11 +95,9 @@ export default {
 		getMessageClass(user) {
 			if (user === this.username) {
 				return "message-self";
-			}
-			else if (user === "system") {
+			} else if (user === "system") {
 				return "message-system";
-			}
-			else {
+			} else {
 				return "message-other";
 			}
 		},
@@ -116,37 +114,31 @@ export default {
 			}
 		},
 		gotMessage(user, message) {
-			this.messages.push(
-				{
-					user: user,
-					message: message,
-				}
-			);
+			this.messages.push({
+				user: user,
+				message: message,
+			});
 			this.scrollToBottom();
 		},
 		setUsers(users) {
 			this.users = users;
 		},
 		loggedIn(username) {
-			this.messages.push(
-				{
-					user: "system",
-					message: `${username} has joined the chat.`,
-				}
-			);
+			this.messages.push({
+				user: "system",
+				message: `${username} has joined the chat.`,
+			});
 			this.scrollToBottom();
 		},
 		loggedOut(username) {
-			this.messages.push(
-				{
-					user: "system",
-					message: `${username} has leaved the chat.`,
-				}
-			);
+			this.messages.push({
+				user: "system",
+				message: `${username} has leaved the chat.`,
+			});
 			this.scrollToBottom();
 		},
 	},
-}
+};
 </script>
 
 <style scoped>
