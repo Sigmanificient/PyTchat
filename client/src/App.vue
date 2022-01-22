@@ -1,10 +1,10 @@
 <template>
-	<p>Hello, World!</p>
+	<router-view :key="$route.path" />
 </template>
 <script>
 export default {
-	name: "App"
-}
+	name: "App",
+};
 </script>
 <style>
 body {
