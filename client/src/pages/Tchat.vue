@@ -78,6 +78,7 @@ export default {
 						this.loggedIn(data["username"]);
 						break;
 					case "logout":
+						console.log("logout");
 						this.loggedOut("logout", data["username"]);
 						break;
 					case "users":
@@ -85,6 +86,11 @@ export default {
 						break;
 				}
 			};
+		},
+		scrollToBottom() {
+			setTimeout(() => {
+				this.tchat.scrollTop = this.tchat.scrollHeight;
+			}, 1);
 		},
 		getMessageClass(user) {
 			if (user === this.username) {
@@ -116,10 +122,7 @@ export default {
 					message: message,
 				}
 			);
-
-			setTimeout(() => {
-				this.tchat.scrollTop = this.tchat.scrollHeight;
-			}, 1);
+			this.scrollToBottom();
 		},
 		setUsers(users) {
 			this.users = users;
@@ -131,9 +134,16 @@ export default {
 					message: `${username} has joined the chat.`,
 				}
 			);
+			this.scrollToBottom();
 		},
 		loggedOut(username) {
-			console.log(username);
+			this.messages.push(
+				{
+					user: "system",
+					message: `${username} has leaved the chat.`,
+				}
+			);
+			this.scrollToBottom();
 		},
 	},
 }
