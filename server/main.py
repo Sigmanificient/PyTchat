@@ -4,7 +4,7 @@ import dotenv
 from websocket_server import WebsocketServer
 
 
-def on_client(client):
+def on_client(client, _srv):
     print(
         '-> Accepted new connection from',
         ':'.join(map(str, client['address'])),
