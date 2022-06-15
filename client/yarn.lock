@@ -1775,6 +1775,11 @@ vue-eslint-parser@~7.1.0:
     esquery "^1.0.1"
     lodash "^4.17.15"
 
+vue-router@^3.0.1:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.5.4.tgz#c453c0b36bc75554de066fefc3f2a9c3212aca70"
+  integrity sha512-x+/DLAJZv2mcQ7glH2oV9ze8uPwcI+H+GgTgTmb5I55bCgY3+vXWIsqbYUzbBSZnwFHEJku4eoaH/x98veyymQ==
+
 vue@^3.2.36:
   version "3.2.37"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.37.tgz#da220ccb618d78579d25b06c7c21498ca4e5452e"
