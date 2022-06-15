@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-const routes = [
+const index = [
   {
     path: "/",
     name: "home",
@@ -15,7 +15,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: index,
 });
 
 export default router;
