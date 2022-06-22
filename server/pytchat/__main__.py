@@ -1,5 +1,6 @@
 import json
 import logging
+import sys
 
 import dotenv
 from websocket_server import WebsocketServer
@@ -68,7 +69,7 @@ def on_message_received(_client, server, data):
 
 
 def main():
-    config = dotenv.dotenv_values('.env')
+    config = dotenv.dotenv_values(sys.argv[1])
     port = config.get('port')
 
     if not port:
