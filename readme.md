@@ -16,10 +16,13 @@
 - Download the source code from this repo.
 
 ### Server
-- In your server, copy the `main.py` file from the `server` directory.
-  
-- Create a `.env` file and write which port you want to listen on as
-  the `env.example` file.
+
+- Run the Makefile main target.
+  ```bash
+  make
+  ```
+
+### Or
 
 - Install the required python packages
   ```bash
@@ -29,7 +32,7 @@
 - run the server using the `bat` file, the `sh` file or this command
   below:
   ```bash
-  python -m python -m main.py
+  python -m pytchat [port]
   ```
 
 ### Client
@@ -46,5 +49,3 @@
   ```sh
   npm run seve
   ```
-
-- Run the client ( `main.py` )
