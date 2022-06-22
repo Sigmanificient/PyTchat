@@ -1,15 +1,2 @@
 # PyCharm Configuration Files
 .idea
-
-# Python
-venv
-
-# Server/port secrets.
-*.env
-!*.env.example
-
-# Pyinstaller
-build
-dist
-*.zip
-*.spec
