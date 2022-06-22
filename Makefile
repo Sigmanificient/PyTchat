@@ -3,8 +3,8 @@ S_ROOT = server
 
 PKG = $(S_ROOT)/pytchat
 
-PM = yarn
-PMR = yarn run
+PM = yarn --cwd $(C_ROOT)
+PMR = $(PM) run
 NM = $(C_ROOT)/node_modules
 
 VENV = $(S_ROOT)/venv
