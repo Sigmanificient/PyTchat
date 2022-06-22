@@ -19,10 +19,14 @@
 
 - Run the Makefile main target.
   ```bash
-  make
+  make server
   ```
 
 ### Or
+
+```bash
+cd server
+```
 
 - Install the required python packages
   ```bash
@@ -40,6 +44,17 @@
 - Make sure to have `node.js` installed on your computer.
 - Download the source code from this repo.
 
+- Run the client using
+  ```sh
+  make client
+  ```
+
+#### Or
+
+```bash
+cd client
+```
+
 - Install the required dependencies
   ```sh
   npm install
@@ -47,5 +62,5 @@
 
 - Run the client using
   ```sh
-  npm run seve
+  npm serve
   ```
