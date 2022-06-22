@@ -1,38 +1,50 @@
-all: start
+C_ROOT = client
+S_ROOT = server
 
-ROOT = server
-PKG = $(ROOT)/pytchat
+PKG = $(S_ROOT)/pytchat
 
-VENV = $(ROOT)/venv
+PM = yarn
+PMR = yarn run
+NM = $(C_ROOT)/node_modules
+
+VENV = $(S_ROOT)/venv
 VBIN = $(VENV)/bin
 
-TEST = $(ROOT)/tests
+TEST = $(S_ROOT)/tests
 
 $(VBIN)/python:
 	python3 -m venv $(VENV)
 
 	chmod +x $(VBIN)/activate
 	./$(VBIN)/activate
-	$(VBIN)/pip install -r $(ROOT)/requirements.txt
-	$(VBIN)/pip install -e $(ROOT)
-
+	$(VBIN)/pip install -r $(S_ROOT)/requirements.txt
+	$(VBIN)/pip install -e $(S_ROOT)
 
 $(VBIN)/pytest: $(VBIN)/python
 	$(VBIN)/pip install -r $(TEST)/requirements.txt
 	$(VBIN)/pytest $(TEST)
 
-start: $(VBIN)/python
-	$(VBIN)/python $(PKG) $(ROOT)/.env
+$(NM):
+	$(PM) install
+
+client: $(NM)
+	$(PMR) serve
+
+c_build: $(NM)
+	$(PMR) build
+
+server: $(VBIN)/python
+	$(VBIN)/python $(PKG) $(S_ROOT)/.env
 
 test: $(VBIN)/pytest
 
 cov: $(VBIN)/pytest $(VBIN)/coverage
 	$(VBIN)/pytest $(TEST) --cov=$(PKG)
-	$(VBIN)/python -m coverage xml -o $(ROOT)/coverage.xml
+	$(VBIN)/python -m coverage xml -o $(S_ROOT)/coverage.xml
 
 clean:
-	rm -rf $(ROOT)/venv
-	rm -rf $(ROOT)/*.-egg-info
-	rm -rf $(ROOT)/coverage.xml
+	rm -rf $(S_ROOT)/venv
+	rm -rf $(S_ROOT)/*.-egg-info
+	rm -rf $(S_ROOT)/coverage.xml
 
 .PHONY: all start clean test cov
