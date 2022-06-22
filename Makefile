@@ -12,6 +12,8 @@ VBIN = $(VENV)/bin
 
 TEST = $(S_ROOT)/tests
 
+S_PORT =
+
 $(VBIN)/python:
 	python3 -m venv $(VENV)
 
@@ -34,7 +36,7 @@ c_build: $(NM)
 	$(PMR) build
 
 server: $(VBIN)/python
-	$(VBIN)/python $(PKG) $(S_ROOT)/.env
+	$(VBIN)/python $(PKG) $(S_PORT)
 
 test: $(VBIN)/pytest
 
@@ -47,4 +49,4 @@ clean:
 	rm -rf $(S_ROOT)/*.-egg-info
 	rm -rf $(S_ROOT)/coverage.xml
 
-.PHONY: all start clean test cov
+.PHONY: all start clean test cov client server c_build

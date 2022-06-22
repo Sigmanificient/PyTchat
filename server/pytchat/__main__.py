@@ -69,19 +69,14 @@ def on_message_received(_client, server, data):
 
 
 def main():
-    config = dotenv.dotenv_values(sys.argv[1])
-    port = config.get('port')
-
-    if not port:
-        print("No port were specified in the configuration.")
-        return
+    port = sys.argv[1] if (len(sys.argv) > 1) else '8080'
 
     if not port.isdigit():
         print("Port must be a number.")
         return
 
     server = WebsocketServer(
-        host=config.get('ip', '0.0.0.0'),
+        host='0.0.0.0',
         port=int(port),
         loglevel=logging.DEBUG
     )
